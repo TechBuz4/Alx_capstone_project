@@ -11,8 +11,12 @@ class Category(models.Model):
 
 class User(AbstractUser):
     """Custom user model extending Django's AbstractUser"""
-    is_seller = models.BooleanField(default=False)  # Flag to differentiate buyers and sellers
-
+    #is_seller = models.BooleanField(default=False)  # Flag to differentiate buyers and sellers
+    ROLE_CHOICES = [
+        ('buyer', 'Buyer'),
+        ('seller', 'Seller'),
+    ]
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='buyer')
     groups = models.ManyToManyField(
         "auth.Group",
         related_name="custom_user_groups",  # Avoids conflict with default User model

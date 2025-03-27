@@ -4,7 +4,7 @@ from .models import User,  Product, Category, Cart, Order
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'username', 'email', 'is_seller'] 
+        fields = ['id', 'username', 'email', 'role'] 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Category
