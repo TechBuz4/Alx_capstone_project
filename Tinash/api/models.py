@@ -1,5 +1,5 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, AbstractUser
 
 # Category Model
 class Category(models.Model):
@@ -8,6 +8,26 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+class User(AbstractUser):
+    """Custom user model extending Django's AbstractUser"""
+    is_seller = models.BooleanField(default=False)  # Flag to differentiate buyers and sellers
+
+    groups = models.ManyToManyField(
+        "auth.Group",
+        related_name="custom_user_groups",  # Avoids conflict with default User model
+        blank=True,
+    )
+    user_permissions = models.ManyToManyField(
+        "auth.Permission",
+        related_name="custom_user_permissions",  # Avoids conflict with default User model
+        blank=True,
+    )
+
+    def __str__(self):
+        return self.username
+
+
 
 # Product Model
 class Product(models.Model):
@@ -31,12 +51,18 @@ class Cart(models.Model):
 
 # Order Model
 class Order(models.Model):
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("shipped", "Shipped"),
+        ("delivered", "Delivered"),
+    ]
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    status = models.CharField(max_length=50, default="pending")
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default="pending")
     created_at = models.DateTimeField(auto_now_add=True)
+    total_price = models.DecimalField(max_digits=10, decimal_places=2, default=0.00)
 
     def __str__(self):
-        return f"Order #{self.id} by {self.user.username}"
+        return f"Order {self.id} - {self.user.username}"
 
 # OrderItem Model (through model for Many-to-Many)
 class OrderProduct(models.Model):
