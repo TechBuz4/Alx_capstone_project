@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import User,  Product, Category, Cart, Order
+from api.models import User,  Product, Category, Cart, Order
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:

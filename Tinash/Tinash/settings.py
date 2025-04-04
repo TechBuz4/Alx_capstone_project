@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'api',
     'django_filters',
     'rest_framework_simplejwt',
+    'rest_framework.authtoken',
+
 
 
 ]
@@ -62,7 +64,7 @@ ROOT_URLCONF = 'Tinash.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [BASE_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -87,6 +89,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+#AUTH_USER_MODEL = 'api.User'
 
 
 # Password validation
@@ -139,6 +142,7 @@ REST_FRAMEWORK = {
 }
 
 
+#AUTH_USER_MODEL = 'User'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),

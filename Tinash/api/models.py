@@ -10,27 +10,33 @@ class Category(models.Model):
         return self.name
 
 class User(AbstractUser):
-    """Custom user model extending Django's AbstractUser"""
-    #is_seller = models.BooleanField(default=False)  # Flag to differentiate buyers and sellers
     ROLE_CHOICES = [
         ('buyer', 'Buyer'),
         ('seller', 'Seller'),
     ]
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='buyer')
+    
     groups = models.ManyToManyField(
         "auth.Group",
-        related_name="custom_user_groups",  # Avoids conflict with default User model
+        related_name="custom_user_groups",
         blank=True,
     )
     user_permissions = models.ManyToManyField(
         "auth.Permission",
-        related_name="custom_user_permissions",  # Avoids conflict with default User model
+        related_name="custom_user_permissions",
         blank=True,
     )
 
     def __str__(self):
         return self.username
 
+    @property
+    def is_buyer(self):
+        return self.role == 'buyer'
+
+    @property
+    def is_seller(self):
+        return self.role == 'seller'
 
 
 # Product Model

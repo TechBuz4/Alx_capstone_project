@@ -16,16 +16,8 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-#from api.views import UserViewSet, ProductViewSet, OrderViewSet
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),  # Make sure to include API URLs here
-    
+    path('api/', include('api.urls')),  # This will include all your API URLs from the `api/urls.py`
 ]
-
-"""path('users/', UserViewSet.as_view(), name='user-list'),
-    path('products/', ProductViewSet.as_view(), name='product-list'),
-    path('orders/', OrderViewSet.as_view(), name='order-list'),
-"""
