@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-#AUTH_USER_MODEL = 'api.User'
+AUTH_USER_MODEL = 'api.User'
 
 
 # Password validation
@@ -139,13 +139,12 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+     #'rest_framework_simplejwt.authentication.JWTAuthentication',
+     'rest_framework.authentication.TokenAuthentication',
     ),
     'EXCEPTION_HANDLER': 'api.exceptions.custom_exception_handler',  # Ensure this path is correct
 }
 
-
-#AUTH_USER_MODEL = 'User'
 
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(days=1),

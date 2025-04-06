@@ -15,18 +15,6 @@ class User(AbstractUser):
         ('seller', 'Seller'),
     ]
     role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='buyer')
-    
-    groups = models.ManyToManyField(
-        "auth.Group",
-        related_name="custom_user_groups",
-        blank=True,
-    )
-    user_permissions = models.ManyToManyField(
-        "auth.Permission",
-        related_name="custom_user_permissions",
-        blank=True,
-    )
-
     def __str__(self):
         return self.username
 
@@ -87,14 +75,3 @@ class OrderProduct(models.Model):
 
     def __str__(self):
         return f"{self.product.name} in Order #{self.order.id}"
-
-"""# Payment Model
-class Payment(models.Model):
-    order = models.OneToOneField(Order, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=10, decimal_places=2)
-    status = models.CharField(max_length=50, default="pending")
-    payment_method = models.CharField(max_length=100)
-
-    def __str__(self):
-        return f"Payment for Order #{self.order.id}"
-"""
